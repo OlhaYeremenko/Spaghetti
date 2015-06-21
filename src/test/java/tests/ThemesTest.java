@@ -27,6 +27,7 @@ public class ThemesTest extends TestSetting {
 
     @Test
     public void checkThatThemeChanged() {
+        loginPage.navigateTo(Configuration.getConfiguration("test.environment"));
         loginPage.loginAction(Configuration.getConfiguration("user1.login"), Configuration.getConfiguration("user1.password"));
         mailPage.openThemeSettings().chooseRandomTheme();
         mailPage.logoutAction();
@@ -34,6 +35,8 @@ public class ThemesTest extends TestSetting {
 
     @AfterClass
     public void afterClass() {
+        mailPage.logoutAction();
+        mailPage=null;
         loginPage = null;
     }
 }

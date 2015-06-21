@@ -23,8 +23,11 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="Spaghetti" />
+        <module name="yeremenko" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="yeremenko" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
-

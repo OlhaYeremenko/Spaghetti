@@ -1,12 +1,20 @@
 package pages;
 
 
+import helpers.Configuration;
 import helpers.Waiter;
+import net.sf.cglib.asm.Constants;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import template.AbstractPage;
+
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -17,6 +25,10 @@ public class MessageFrom extends AbstractPage {
     private static final String FORM_TEXT_XPATH = "//div[@role='textbox']";
     private static final String FORM_SENDBTN_XPATH = "//tbody//div[count(div) = 2]/div[@role='button' and @data-tooltip]";
     private static final String FORM_SAVE_AND_QUITBTN_XPATH = ".//img[3]";
+	private final static String ATTACH_FILES_BTN = "//div[@command = 'Files']/div/div/div";
+
+	@FindBy(xpath = ATTACH_FILES_BTN)
+	private WebElement attachFileBth;
 
 	@FindBy(xpath = FORM_TO_XPATH)
 	private WebElement toField;
@@ -54,19 +66,54 @@ public class MessageFrom extends AbstractPage {
 		return this;
 	}
 
-    private MailPage clickSendButton() {
+    public MailPage clickSendButton() {
 		sendBTN.click();
 		return new MailPage(driver);
 	}
 
-    public MailPage sendMailToUser(String userName, String messageSubject,String messageContent){
+	private MessageFrom attachFileBthClick(){
+		attachFileBth.click();
+		return this;
+	}
 
-        Waiter.waitForElementPresent(getDriver(), FORM_TO_XPATH);
+    public MessageFrom sendMailToUser(String userName, String messageSubject,String messageContent){
 
-        inputSenderReceiver(userName).inputSubject(messageSubject)
-                .inputContent(messageContent).clickSendButton();
-        
-        return new MailPage(driver);
-    }
+		Waiter.waitForElementPresent(getDriver(), FORM_TO_XPATH);
+
+		inputSenderReceiver(userName).inputSubject(messageSubject)
+				.inputContent(messageContent);
+
+		return this;
+	}
+
+	public MessageFrom attachFile(String filePath){
+		attachFileBthClick();
+
+
+
+		uploadFile(filePath);
+		return this;
+	}
+
+	private void uploadFile(String filePath) {
+
+		try {
+			setClipboardData(filePath);
+			Robot robot = new Robot();
+			robot.keyPress(KeyEvent.VK_CONTROL);
+			robot.keyPress(KeyEvent.VK_V);
+			robot.keyRelease(KeyEvent.VK_V);
+			robot.keyRelease(KeyEvent.VK_CONTROL);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void setClipboardData(String path) {
+		StringSelection stringSelection = new StringSelection(path);
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+	}
 
 }

@@ -1,11 +1,9 @@
 package pages;
 
-import helpers.Configuration;
+
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import helpers.Waiter;
-import org.openqa.selenium.ElementNotVisibleException;
-import org.openqa.selenium.UnhandledAlertException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -17,6 +15,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 
 /**
  * Created by Olha_Yeremenko on 21-Jun-15.
@@ -44,7 +45,6 @@ public class MailPage extends AbstractPage {
 
     private static final String SECOND_COMPOSED_LETTER_XPATH = "//tr[1]//span/b[text()='" + "" + "']";
 
-
     private static final String MORE_TABS_BUTTON_XPATH = "//span[@id and @class and @role='button']/span/div";
 
     private static final String LAST_RCVD_LETTER_CHECKBOX_XPATH = "(//div[@role='checkbox'])[1]";
@@ -52,9 +52,21 @@ public class MailPage extends AbstractPage {
     private static final String SPAN_CONFIRMATION_XPATH = "//div[@aria-live]//span[1]";
 
     private static final String STARRED_TAB_XPATH = "//a[contains(@href, 'starred')]";
+    private static final String INBOX_TAB_XPATH = "//a[contains(@href, 'inbox') and @aria-label]";
+    private static final String NEW_LETTER_SUBJECT = "//table//tbody//tr[1]/td[6]//span[1]";
+    private static final String NEW_LETTER_CONTENT = "//table//tbody//tr[1]/td[6]//span[2]";
+    private static final String BACK_TO_INBOX = "//div[@role='button'and @act='8']";
 
-    private static final String STARRED_CONFIRMATION_XPATH = "//div[@aria-live]/div/div/span[1]";
 
+    @FindBy(xpath = INBOX_TAB_XPATH)
+    private WebElement inboxBtn;
+
+
+    @FindBy(xpath = NEW_LETTER_SUBJECT)
+    private WebElement letterSubject;
+
+    @FindBy(xpath = NEW_LETTER_CONTENT)
+    private WebElement letterContent;
 
     @FindBy(xpath = STARRED_TAB_XPATH)
     private WebElement starredTab;
@@ -92,39 +104,55 @@ public class MailPage extends AbstractPage {
     @FindBy(xpath = ADD_NEW_USER)
     private WebElement addUserBTN;
 
-
     @FindBy(xpath = SETTINGS)
     private WebElement settingBTN;
 
     @FindBy(xpath = SETTINGS_THEME)
     private WebElement settingThemeBTN;
 
+    private WebElement getLetterSubject() {
+        try {
+            return letterSubject;
+        } catch (ElementNotVisibleException | ElementNotFoundException e) {
+            return getDriver().findElement(By.xpath(NEW_LETTER_SUBJECT + "/b"));
+        }
+    }
+
+    private WebElement getLetterContent() {
+        try {
+            return letterContent;
+        } catch (ElementNotVisibleException | ElementNotFoundException e) {
+            return getDriver().findElement(By.xpath(NEW_LETTER_CONTENT + "/b"));
+        }
+    }
+
     public MailPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
 
-    public MailPage spamTabClick() {
+    private MailPage spamTabClick() {
+        Waiter.waitForElementPresent(getDriver(), SPAM_TAB_XPATH);
         spamTab.click();
         return this;
     }
 
-    public MailPage starredTabClick() {
+    public MailPage goToStarredClick() {
         starredTab.click();
-        return this;
+        return new MailPage(driver);
     }
 
-    public MailPage moreTabsBtnClick() {
+    private MailPage moreTabsBtnClick() {
         moreTabsBtn.click();
         return this;
     }
 
-    public MailPage toSpamBtnClick() {
+    private MailPage toSpamBtnClick() {
         toSpamBtn.click();
         return this;
     }
 
-    public MailPage newLetterClick() {
+    private MailPage newLetterClick() {
         newLetter.click();
         return this;
     }
@@ -160,7 +188,7 @@ public class MailPage extends AbstractPage {
         return this;
     }
 
-    public MailPage settingThemeBTNClick() {
+    private MailPage settingThemeBTNClick() {
         Waiter.waitForElementPresent(getDriver(), SETTINGS_THEME);
         settingThemeBTN.click();
         return this;
@@ -198,13 +226,9 @@ public class MailPage extends AbstractPage {
         userLogoClick();
         try {
             Waiter.waitForElementPresent(getDriver(), SECOND_USER);
-
             secondUserLogoClick();
-
             ArrayList<String> newTab = new ArrayList<String>(driver.getWindowHandles());
-
             driver.switchTo().window(newTab.get(2));
-
         } catch (NoSuchElementException | ElementNotVisibleException e) {
             addUser(login, password);
         }
@@ -212,9 +236,16 @@ public class MailPage extends AbstractPage {
     }
 
     private MailPage addUser(String login, String password) {
+        String old = driver.getWindowHandle();
         addUserBTNClick();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(1));
+        driver.switchTo().window(tabs.get(tabs.size() - 1));
+
         new LoginPage(driver).loginAction(login, password);
         return this;
     }
@@ -226,10 +257,10 @@ public class MailPage extends AbstractPage {
         return this;
     }
 
-    public SpamPage goToFolderSpam() {
+    public MailPage goToFolderSpam() {
         moreTabsBtnClick();
         spamTabClick();
-        return new SpamPage(driver);
+        return this;
     }
 
     public MailPage dragAndDropMessage() {
@@ -242,6 +273,20 @@ public class MailPage extends AbstractPage {
 
         return this;
     }
+
+
+    public MailPage assertThatLetterMovedAndBackToInbox(String subject, String content) {
+//       assertThat(getLetterSubject().getText(), containsString(subject));
+//       assertThat(getLetterContent().getText(), containsString(content));
+
+//        Waiter.waitForElementPresent(getDriver(), BACK_TO_INBOX);
+//        Actions actions = new Actions(driver);
+//        actions.dragAndDrop(newLetter,inboxBtn).perform();
+//        Assert.assertNotNull(confirmationAlert);
+        return this;
+    }
+
+
 }
 
 

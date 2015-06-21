@@ -27,15 +27,20 @@ public class DragAndDropTest extends TestSetting {
         loginPage.navigateTo(Configuration.getConfiguration("test.environment"));
 
         loginPage.loginAction(Configuration.getConfiguration("user1.login"), Configuration.getConfiguration("user1.password"));
-        mailPage.composeMailBtnClick().sendMailToUser(Configuration.getConfiguration("user2.login"), SUBJECT, CONTENT);
+        mailPage.composeMailBtnClick().sendMailToUser(Configuration.getConfiguration("user2.login"), SUBJECT, CONTENT).clickSendButton();
+
         mailPage.addOrSwithUser(Configuration.getConfiguration("user2.login"), Configuration.getConfiguration("user2.password"));
+
         mailPage.dragAndDropMessage();
-        mailPage.logoutAction();
+        mailPage.goToStarredClick().assertThatLetterMovedAndBackToInbox(SUBJECT, CONTENT);
+
     }
 
 
     @AfterClass
     public void afterClass() {
+        mailPage.logoutAction();
+        mailPage=null;
         loginPage = null;
     }
 }

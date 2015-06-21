@@ -73,8 +73,6 @@ public class LoginPage extends AbstractPage {
     }
 
     public AbstractPage loginAction(String login, String password) {
-        System.out.println(getDriver().getCurrentUrl());
-
         inputUserName(login);
         try {
            nextBtnClick();

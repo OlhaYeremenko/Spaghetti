@@ -1,5 +1,6 @@
 package pages;
 
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,13 +10,21 @@ import template.AbstractPage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
-/**
- * Created by Olha_Yeremenko on 21-Jun-15.
- */
-public class SpamPage  {
-//
+public class StarredPage extends AbstractPage {
+
+
+    public StarredPage(WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver, this);
+    }
+
 //    private static final String NEW_LETTER_SUBJECT = "//table//tbody//tr[1]/td[6]//span[1]";
 //    private static final String NEW_LETTER_CONTENT = "//table//tbody//tr[1]/td[6]//span[2]";
+//    private static final String BACK_TO_INBOX = "//div[@role='button'and @act='8']";
+//
+//
+//    @FindBy(xpath = BACK_TO_INBOX)
+//    private WebElement backToInboxBtn;
 //
 //    @FindBy(xpath = NEW_LETTER_SUBJECT)
 //    private WebElement letterSubject;
@@ -23,16 +32,16 @@ public class SpamPage  {
 //    @FindBy(xpath = NEW_LETTER_CONTENT)
 //    private WebElement letterContent;
 //
-//    public SpamPage(WebDriver driver) {
-//        super(driver);
-//        PageFactory.initElements(driver, this);
-//    }
-//
-//    public MailPage assertThatLetterInSpam(String subject, String content) {
+//    public MailPage assertThatLetterInStarred(String subject, String content) {
 //
 //        assertThat(letterSubject.getText(), containsString(subject));
 //        assertThat(letterContent.getText(), containsString(content));
 //
 //        return new MailPage(driver);
 //    }
+//
+//    public MailPage backToInbocx() {
+//        return new MailPage(driver);
+//    }
+
 }

@@ -6,12 +6,19 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.concurrent.TimeUnit;
+
 public class Waiter {
-	 public static WebElement waitForElementPresent(WebDriver driver, String elementXpath)
-     {
-	    	WebDriverWait waitForOne = new WebDriverWait(driver, 30);
-			
-	        return waitForOne.until(ExpectedConditions.presenceOfElementLocated(By
-					.xpath(elementXpath)));	
- }
+    public static WebElement waitForElementPresent(WebDriver driver, String elementXpath) {
+        WebDriverWait waitForOne = new WebDriverWait(driver, 30);
+
+        return waitForOne.until(ExpectedConditions.presenceOfElementLocated(By
+                .xpath(elementXpath)));
+    }
+
+    public static void waitForLoadingFile(WebDriver driver) {
+        driver.manage().timeouts()
+                .implicitlyWait(Long.getLong(Configuration.getConfiguration("delay.long")), TimeUnit.MILLISECONDS);
+    }
+
 }

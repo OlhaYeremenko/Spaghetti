@@ -36,7 +36,6 @@ public class ThemesPage extends AbstractPage {
 
         Random random = new Random();
         int index = random.nextInt(themesList.size());
-        System.out.println(index);
         themesList.get(index).click();
         Waiter.waitForElementPresent(driver, THEME_CONFIRMATION_XPATH);
 
