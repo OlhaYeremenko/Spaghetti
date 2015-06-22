@@ -7,6 +7,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
 import template.AbstractPage;
 
@@ -49,7 +50,7 @@ public class MailPage extends AbstractPage {
 
     private static final String LAST_RCVD_LETTER_CHECKBOX_XPATH = "(//div[@role='checkbox'])[1]";
     private static final String MAIL_SENT_CONFIRMATION_XPATH = "//div/span[@id='link_vsm']";
-    private static final String SPAN_CONFIRMATION_XPATH = "//div[@aria-live]//span[1]";
+    private static final String ASSERT_LETTER_SUBJECT = "//table[@role='presentation']//h2[@tabindex='-1']";
 
     private static final String STARRED_TAB_XPATH = "//a[contains(@href, 'starred')]";
     private static final String INBOX_TAB_XPATH = "//a[contains(@href, 'inbox') and @aria-label]";
@@ -62,7 +63,7 @@ public class MailPage extends AbstractPage {
     private WebElement inboxBtn;
 
 
-    @FindBy(xpath = NEW_LETTER_SUBJECT)
+    @FindBy(xpath = ASSERT_LETTER_SUBJECT)
     private WebElement letterSubject;
 
     @FindBy(xpath = NEW_LETTER_CONTENT)
@@ -119,11 +120,8 @@ public class MailPage extends AbstractPage {
     }
 
     private WebElement getLetterContent() {
-        try {
+
             return letterContent;
-        } catch (ElementNotVisibleException | ElementNotFoundException e) {
-            return getDriver().findElement(By.xpath(NEW_LETTER_CONTENT + "/b"));
-        }
     }
 
     public MailPage(WebDriver driver) {
@@ -268,21 +266,18 @@ public class MailPage extends AbstractPage {
         Waiter.waitForElementPresent(getDriver(), NEW_LETTER_XPATH);
         Actions actions = new Actions(driver);
 
-        actions.dragAndDrop(newLetter, starredTab).perform();
+        actions.dragAndDrop(newLetter, starredTab).release().perform();
+        Waiter.delay(6000L);
         Assert.assertNotNull(confirmationAlert);
-
         return this;
     }
 
 
-    public MailPage assertThatLetterMovedAndBackToInbox(String subject, String content) {
-//       assertThat(getLetterSubject().getText(), containsString(subject));
-//       assertThat(getLetterContent().getText(), containsString(content));
-
-//        Waiter.waitForElementPresent(getDriver(), BACK_TO_INBOX);
-//        Actions actions = new Actions(driver);
-//        actions.dragAndDrop(newLetter,inboxBtn).perform();
-//        Assert.assertNotNull(confirmationAlert);
+    public MailPage assertThatLetterMoved(String subject, String content) {
+        Waiter.waitForElementPresent(getDriver(),NEW_LETTER_SUBJECT);
+        letterSubject.click();
+        Waiter.waitForElementPresent(getDriver(),ASSERT_LETTER_SUBJECT);
+        assertThat( letterSubject.getText(), containsString(subject));
         return this;
     }
 

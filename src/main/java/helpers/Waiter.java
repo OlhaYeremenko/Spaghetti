@@ -16,9 +16,12 @@ public class Waiter {
                 .xpath(elementXpath)));
     }
 
-    public static void waitForLoadingFile(WebDriver driver) {
-        driver.manage().timeouts()
-                .implicitlyWait(Long.getLong(Configuration.getConfiguration("delay.long")), TimeUnit.MILLISECONDS);
+    public static void delay(Long time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -35,7 +35,7 @@ public class letterInSpamTest extends TestSetting {
         mailPage.composeMailBtnClick().sendMailToUser(Configuration.getConfiguration("user2.login"), SUBJECT, CONTENT).clickSendButton();
         mailPage.addOrSwithUser(Configuration.getConfiguration("user2.login"), Configuration.getConfiguration("user2.password"));
 
-        mailPage.goToFolderSpam().assertThatLetterMovedAndBackToInbox(SUBJECT, CONTENT);
+        mailPage.goToFolderSpam().assertThatLetterMoved(SUBJECT, CONTENT);
 
 }
 

@@ -23,16 +23,14 @@ public class DragAndDropTest extends TestSetting {
 
     @Test
     public void checkThatLetterInStarred() {
-
         loginPage.navigateTo(Configuration.getConfiguration("test.environment"));
 
         loginPage.loginAction(Configuration.getConfiguration("user1.login"), Configuration.getConfiguration("user1.password"));
         mailPage.composeMailBtnClick().sendMailToUser(Configuration.getConfiguration("user2.login"), SUBJECT, CONTENT).clickSendButton();
-
         mailPage.addOrSwithUser(Configuration.getConfiguration("user2.login"), Configuration.getConfiguration("user2.password"));
-
         mailPage.dragAndDropMessage();
-        mailPage.goToStarredClick().assertThatLetterMovedAndBackToInbox(SUBJECT, CONTENT);
+
+        mailPage.goToStarredClick().assertThatLetterMoved(SUBJECT, CONTENT);
 
     }
 

@@ -12,7 +12,7 @@ import pages.MailPage;
  */
 public class AttachFileTest  extends TestSetting{
 
-    private static final String filePath=System.getProperty("user.dir") +"\\Spaghetti\\src\\test\\resources\\Anotatsiya.docx";
+    private static final String filePath=System.getProperty("user.dir") +Configuration.getConfiguration("file.path");
     LoginPage loginPage;
     MailPage mailPage;
 
