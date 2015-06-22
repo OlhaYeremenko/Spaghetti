@@ -21,7 +21,7 @@
 
     <test name="letterInSpamTest">
         <classes>
-            <class name="com.epam.preproduction.tests.letterInSpamTest" />
+            <class name="com.epam.preproduction.tests.LetterInSpamTest" />
         </classes>
     </test>
 

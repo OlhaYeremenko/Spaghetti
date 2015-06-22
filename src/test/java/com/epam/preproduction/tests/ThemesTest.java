@@ -1,9 +1,7 @@
 package com.epam.preproduction.tests;
 
 import com.epam.preproduction.helpers.Configuration;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import com.epam.preproduction.pages.LoginPage;
 import com.epam.preproduction.pages.MailPage;
 import com.epam.preproduction.pages.ThemesPage;
@@ -17,11 +15,11 @@ public class ThemesTest extends TestSetting {
     MailPage mailPage;
     ThemesPage themesPage;
 
-    @BeforeClass
-    public void beforeClass() {
+    @BeforeTest
+    public void beforeTest() {
         loginPage = new LoginPage(driver);
-        mailPage= new MailPage(driver);
-        themesPage= new ThemesPage(driver);
+        mailPage = new MailPage(driver);
+        themesPage = new ThemesPage(driver);
     }
 
     @Test
@@ -32,11 +30,10 @@ public class ThemesTest extends TestSetting {
         mailPage.logoutAction();
     }
 
-    @AfterClass
-    public void afterClass() {
-        mailPage.logoutAction();
-        mailPage=null;
-        loginPage = null;
+    @AfterTest
+    public void afterTest() {
+        mailPage = null;
+       loginPage = null;
     }
 }
 

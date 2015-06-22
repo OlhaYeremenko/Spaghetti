@@ -2,6 +2,7 @@ package com.epam.preproduction.tests;
 
 import com.epam.preproduction.helpers.Configuration;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import com.epam.preproduction.pages.LoginPage;
 import com.epam.preproduction.pages.MailPage;
@@ -10,14 +11,14 @@ import com.epam.preproduction.pages.MailPage;
  * @author olia
  * @since 22.06.2015
  */
-public class AttachFileTest  extends TestSetting{
+public class AttachFileTest extends TestSetting {
 
-    private static final String filePath=System.getProperty("user.dir") +Configuration.getConfiguration("file.path");
+    private static final String filePath = System.getProperty("user.dir") + Configuration.getConfiguration("file.path");
     LoginPage loginPage;
     MailPage mailPage;
 
-    @BeforeClass
-    public void beforeClass() {
+    @BeforeTest
+    public void beforeTest() {
         loginPage = new LoginPage(driver);
         mailPage = new MailPage(driver);
     }
@@ -25,9 +26,8 @@ public class AttachFileTest  extends TestSetting{
     @Test
     public void sentFileWithAttach() {
         loginPage.navigateTo(Configuration.getConfiguration("test.environment"));
-
         loginPage.loginAction(Configuration.getConfiguration("user1.login"), Configuration.getConfiguration("user1.password"));
         mailPage.composeMailBtnClick().sendMailToUser(Configuration.getConfiguration("user2.login"), SUBJECT, CONTENT).attachFile(filePath).clickSendButton();
-
     }
 }
+

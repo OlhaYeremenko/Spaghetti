@@ -14,6 +14,7 @@ import com.epam.preproduction.template.AbstractPage;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,35 +28,21 @@ public class MailPage extends AbstractPage {
     private static final String COMPOSE_BTN_XPATH = "(//div[@id and @class]/div/div[@role='button' and @gh])[2]";
     private static final String SENT_MAIL_TAB_XPATH = ".//a[contains(@href,'#sent')]";
     private static final String SPAM_TAB_XPATH = "//a[contains(@href, 'spam')]";
-
     private static final String TO_SPAM_BTN_XPATH = "//div[@act and @role='button'][2]/div/div";
-
     private static final String LOGOUT_BTN_XPATH = "//a[contains(@href, 'logout')]";
     private static final String USER_LOGO_XPATH = "//a[contains(@href, 'SignOutOptions')]";
-    public static final String CONFIRMATION_XPATH = "//div[@aria-live='assertive' and @role='alert' and @aria-atomic='true']/div/div[2]";
-
-
+    private static final String CONFIRMATION_XPATH = "//div[@aria-live='assertive' and @role='alert' and @aria-atomic='true']/div/div[2]";
     private final static String SETTINGS = "//div[contains(@role,'button') and (@title='Настройки')]";
     private final static String SETTINGS_THEME = "//div[@id and @role='menu']//div[9]/div ";
-    private final static String SECOND_USER_LOGO = " //div[4]/div[2]/div[2]/a[1]/img";
     private final static String SECOND_USER = "//div[2]/div[2]/a[1]/img";
     private final static String ADD_NEW_USER = "//a[contains(@href,'https://accounts.google.com/AddSession')]";
-
     private static final String NEW_LETTER_XPATH = " //div[@role='tabpanel']//table//tbody/tr[1]/td[2]/div/div";
-
-    private static final String SECOND_COMPOSED_LETTER_XPATH = "//tr[1]//span/b[text()='" + "" + "']";
-
     private static final String MORE_TABS_BUTTON_XPATH = "//span[@id and @class and @role='button']/span/div";
-
-    private static final String LAST_RCVD_LETTER_CHECKBOX_XPATH = "(//div[@role='checkbox'])[1]";
-    private static final String MAIL_SENT_CONFIRMATION_XPATH = "//div/span[@id='link_vsm']";
     private static final String ASSERT_LETTER_SUBJECT = "//table[@role='presentation']//h2[@tabindex='-1']";
-
     private static final String STARRED_TAB_XPATH = "//a[contains(@href, 'starred')]";
     private static final String INBOX_TAB_XPATH = "//a[contains(@href, 'inbox') and @aria-label]";
     private static final String NEW_LETTER_SUBJECT = "//table//tbody//tr[1]/td[6]//span[1]";
     private static final String NEW_LETTER_CONTENT = "//table//tbody//tr[1]/td[6]//span[2]";
-    private static final String BACK_TO_INBOX = "//div[@role='button'and @act='8']";
 
 
     @FindBy(xpath = INBOX_TAB_XPATH)
@@ -254,9 +241,12 @@ public class MailPage extends AbstractPage {
         return this;
     }
 
-    public MailPage goToFolderSpam() {
+    public MailPage goToSpamFolder() {
         moreTabsBtnClick();
+        Waiter.delay(3000L);
+
         spamTabClick();
+        Waiter.delay(1000L);
         return this;
     }
 
