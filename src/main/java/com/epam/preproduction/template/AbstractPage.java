@@ -1,4 +1,4 @@
-package template;
+package com.epam.preproduction.template;
 
 import org.openqa.selenium.WebDriver;
 

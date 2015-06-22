@@ -1,14 +1,11 @@
-package pages;
+package com.epam.preproduction.pages;
 
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import template.AbstractPage;
+import com.epam.preproduction.template.AbstractPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 
 public class StarredPage extends AbstractPage {
 

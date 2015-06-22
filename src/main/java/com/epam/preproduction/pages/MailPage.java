@@ -1,15 +1,14 @@
-package pages;
+package com.epam.preproduction.pages;
 
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
-import helpers.Waiter;
+import com.epam.preproduction.helpers.Waiter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
-import template.AbstractPage;
+import com.epam.preproduction.template.AbstractPage;
 
 
 import java.awt.*;
@@ -121,7 +120,7 @@ public class MailPage extends AbstractPage {
 
     private WebElement getLetterContent() {
 
-            return letterContent;
+        return letterContent;
     }
 
     public MailPage(WebDriver driver) {
@@ -274,10 +273,10 @@ public class MailPage extends AbstractPage {
 
 
     public MailPage assertThatLetterMoved(String subject, String content) {
-        Waiter.waitForElementPresent(getDriver(),NEW_LETTER_SUBJECT);
+        Waiter.waitForElementPresent(getDriver(), NEW_LETTER_SUBJECT);
         letterSubject.click();
-        Waiter.waitForElementPresent(getDriver(),ASSERT_LETTER_SUBJECT);
-        assertThat( letterSubject.getText(), containsString(subject));
+        Waiter.waitForElementPresent(getDriver(), ASSERT_LETTER_SUBJECT);
+        assertThat(letterSubject.getText(), containsString(subject));
         return this;
     }
 

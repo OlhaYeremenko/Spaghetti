@@ -1,4 +1,4 @@
-package driverfactory;
+package com.epam.preproduction.driverfactory;
 
 import org.openqa.selenium.WebDriver;
 

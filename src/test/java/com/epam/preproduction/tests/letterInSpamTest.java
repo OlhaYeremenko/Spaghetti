@@ -1,11 +1,11 @@
-package tests;
+package com.epam.preproduction.tests;
 
-import helpers.Configuration;
+import com.epam.preproduction.helpers.Configuration;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.LoginPage;
-import pages.MailPage;
+import com.epam.preproduction.pages.LoginPage;
+import com.epam.preproduction.pages.MailPage;
 
 /**
  * Created by Olha_Yeremenko on 21-Jun-15.

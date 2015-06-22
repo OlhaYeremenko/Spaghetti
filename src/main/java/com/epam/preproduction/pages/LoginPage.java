@@ -1,20 +1,16 @@
-package pages;
+package com.epam.preproduction.pages;
 
 
-import helpers.Configuration;
-import helpers.Waiter;
+import com.epam.preproduction.helpers.Waiter;
 import org.openqa.selenium.By;
-import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import template.AbstractPage;
+import com.epam.preproduction.template.AbstractPage;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;

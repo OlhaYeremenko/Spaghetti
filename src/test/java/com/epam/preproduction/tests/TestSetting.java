@@ -1,7 +1,7 @@
-package tests;
+package com.epam.preproduction.tests;
 
-import driverfactory.WebDriverFactory;
-import helpers.Configuration;
+import com.epam.preproduction.driverfactory.WebDriverFactory;
+import com.epam.preproduction.helpers.Configuration;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;

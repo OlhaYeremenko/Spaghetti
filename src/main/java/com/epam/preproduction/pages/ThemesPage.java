@@ -1,11 +1,11 @@
-package pages;
+package com.epam.preproduction.pages;
 
-import helpers.Waiter;
+import com.epam.preproduction.helpers.Waiter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import template.AbstractPage;
+import com.epam.preproduction.template.AbstractPage;
 
 import java.util.List;
 import java.util.Random;

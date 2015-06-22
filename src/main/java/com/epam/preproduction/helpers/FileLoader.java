@@ -1,4 +1,4 @@
-package helpers;
+package com.epam.preproduction.helpers;
 
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;

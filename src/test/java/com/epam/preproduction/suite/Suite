@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="SeleniumTest">
+    <test name="ThemesTest">
+        <classes>
+            <class name="com.epam.preproduction.tests.ThemesTest" />
+        </classes>
+    </test>
+
+    <test name="AttachFileTest">
+        <classes>
+            <class name="com.epam.preproduction.tests.AttachFileTest" />
+        </classes>
+    </test>
+
+    <test name="DragAndDropTest">
+        <classes>
+            <class name="com.epam.preproduction.tests.DragAndDropTest" />
+        </classes>
+    </test>
+
+    <test name="letterInSpamTest">
+        <classes>
+            <class name="com.epam.preproduction.tests.letterInSpamTest" />
+        </classes>
+    </test>
+
+</suite>
