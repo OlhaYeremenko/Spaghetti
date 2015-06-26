@@ -1,7 +1,9 @@
 package com.epam.preproduction.pages;
 
 
+import com.epam.preproduction.helpers.Constants;
 import com.epam.preproduction.helpers.Waiter;
+import org.apache.commons.logging.Log;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,7 +24,6 @@ public class LoginPage extends AbstractPage {
     private static final String NEXT_BTN_XPATH = "//input[@id='next']";
     private static final String PASSWORD_INPUT_XPATH = "//input[@id='Passwd']";
     private static final String SUBMIT_XPATH = "//input[@id='signIn']";
-    private static final String  TITLE = "Google";
     private static final String COMPOSE_BTN_XPATH = "//div[@role='button' and @gh and contains(@class, 'T')]";
 
 	@FindBy(xpath = USERNAME_INPUT_XPATH)
@@ -73,15 +74,16 @@ public class LoginPage extends AbstractPage {
         try {
            nextBtnClick();
         } catch (NoSuchElementException e) {
+
         } finally {
-            (new WebDriverWait(getDriver(), 20))
+            (new WebDriverWait(getDriver(), Constants.SMALL_DELAY))
                     .until(ExpectedConditions.elementToBeClickable(By
                             .xpath(PASSWORD_INPUT_XPATH)));
            inputPassword(password).submitLogin();
         }
         Waiter.waitForElementPresent(getDriver(), COMPOSE_BTN_XPATH);
-        assertThat(getDriver().getTitle(), containsString(login));
-
+        assertThat(getDriver().getTitle(),containsString(login));
+        logger.info("assertion true for testLastLetter");
         return new MailPage(driver);
     }
 

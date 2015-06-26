@@ -11,12 +11,12 @@ import com.epam.preproduction.pages.ThemesPage;
  */
 public class ThemesTest extends TestSetting {
 
-    LoginPage loginPage;
-    MailPage mailPage;
-    ThemesPage themesPage;
+    private LoginPage loginPage;
+    private MailPage mailPage;
+    private ThemesPage themesPage;
 
-    @BeforeTest
-    public void beforeTest() {
+    @BeforeClass
+    public void beforeClass() {
         loginPage = new LoginPage(driver);
         mailPage = new MailPage(driver);
         themesPage = new ThemesPage(driver);
@@ -25,16 +25,19 @@ public class ThemesTest extends TestSetting {
     @Test
     public void checkThatThemeChanged() {
         loginPage.navigateTo(Configuration.getConfiguration("test.environment"));
-        loginPage.loginAction(Configuration.getConfiguration("user1.login"), Configuration.getConfiguration("user1.password"));
+        logger.info("open ");
+        loginPage.loginAction(USER1_LOGIN, USER1_PASSWORD);
+        logger.info("login action preformed successfully");
         mailPage.openThemeSettings().chooseRandomTheme();
-        mailPage.logoutAction();
+        logger.info(" random theme change successfully");
+        logger.info("logout");
     }
 
     @AfterTest
     public void afterTest() {
-        mailPage = null;
-       loginPage = null;
+        mailPage.logoutAction();
     }
+
 }
 
 

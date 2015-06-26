@@ -16,8 +16,8 @@ import java.util.Random;
 
 public class ThemesPage extends AbstractPage {
 
-    public static final String THEMES_LIST_XPATH = "//tbody/tr[2]/td/div[@id]/div/div/div/div";
-    public static final String THEME_CONFIRMATION_XPATH = "//div[@aria-live='assertive' and @role='alert' and @aria-atomic='true']/div/div[2]";
+    private static final String THEMES_LIST_XPATH = "//tbody/tr[2]/td/div[@id]/div/div/div/div";
+    private static final String THEME_CONFIRMATION_XPATH = "//div[@aria-live='assertive' and @role='alert' and @aria-atomic='true']/div/div[2]";
 
 
     @FindBy(xpath = THEMES_LIST_XPATH)

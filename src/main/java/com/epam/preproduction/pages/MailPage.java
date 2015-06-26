@@ -1,6 +1,7 @@
 package com.epam.preproduction.pages;
 
 
+import com.epam.preproduction.helpers.Constants;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.epam.preproduction.helpers.Waiter;
 import org.openqa.selenium.*;
@@ -229,7 +230,6 @@ public class MailPage extends AbstractPage {
         }
         ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(tabs.size() - 1));
-
         new LoginPage(driver).loginAction(login, password);
         return this;
     }
@@ -243,10 +243,9 @@ public class MailPage extends AbstractPage {
 
     public MailPage goToSpamFolder() {
         moreTabsBtnClick();
-        Waiter.delay(3000L);
-
+        Waiter.delay(Constants.SEC_DELAY);
         spamTabClick();
-        Waiter.delay(1000L);
+        Waiter.delay(Constants.SEC_DELAY);
         return this;
     }
 

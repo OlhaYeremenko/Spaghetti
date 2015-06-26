@@ -1,6 +1,7 @@
 package com.epam.preproduction.pages;
 
 
+import com.epam.preproduction.helpers.Constants;
 import com.epam.preproduction.helpers.FileLoader;
 import com.epam.preproduction.helpers.Waiter;
 import org.openqa.selenium.WebDriver;
@@ -20,8 +21,7 @@ public class MessageFrom extends AbstractPage {
     private static final String FORM_SAVE_AND_QUITBTN_XPATH = ".//img[3]";
     private final static String ATTACH_FILES_BTN = "//div[@command = 'Files']/div/div/div";
     private static final String PROGRESS_BAR_LINK = "//div[@role='progressbar']";
-
-    Robot robot;
+    private Robot robot;
 
     @FindBy(xpath = ATTACH_FILES_BTN)
     private WebElement attachFileBth;
@@ -44,7 +44,6 @@ public class MessageFrom extends AbstractPage {
     public MessageFrom(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
-
     }
 
     private Robot getRobot() {
@@ -82,9 +81,7 @@ public class MessageFrom extends AbstractPage {
     }
 
     public MessageFrom sendMailToUser(String userName, String messageSubject, String messageContent) {
-
         Waiter.waitForElementPresent(getDriver(), FORM_TO_XPATH);
-
         inputSenderReceiver(userName).inputSubject(messageSubject)
                 .inputContent(messageContent);
         return this;
@@ -92,7 +89,7 @@ public class MessageFrom extends AbstractPage {
 
     public MessageFrom attachFile(String filePath) {
         attachFileBthClick();
-        getRobot().delay(3000);
+        getRobot().delay(Integer.parseInt(Constants.MIDDLE_DELAY.toString()));
         FileLoader.uploadFile(filePath);
         Waiter.waitForElementPresent(driver, PROGRESS_BAR_LINK);
         return this;
